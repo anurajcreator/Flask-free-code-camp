@@ -17,9 +17,9 @@
     </title>
 </head>
 
-<body>
+<body style="background-color: #101221" class="text-light">
     <!-- Navbar here -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Flask Market</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -34,6 +34,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('market_page') }}">Market</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('add_item') }}">Add item</a>
                     </li>
                 </ul>
                 <div class="d-flex flex-row-reverse">
@@ -50,9 +53,11 @@
         </div>
     </nav>
     <!-- Future Content here -->
+    <div class="container my-3">
     {% block body %}
 
     {% endblock body%}
+    </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
@@ -66,11 +71,5 @@
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
 </body>
-<style>
-    body {
-        background-color: #101221;
-        color: white
-    }
-</style>
 
 </html>

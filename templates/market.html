@@ -4,33 +4,32 @@ Market Page
 {% endblock title %}
 
 {% block body %}
+<h1>Market Page</h1>
 <div class="container my-3">
-  <h1>Market Page</h1>
-  <div class="container my-3"></div>
-  <table class="table table-dark table-striped m">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">NAME</th>
-        <th scope="col">BARCODE</th>
-        <th scope="col">PRICE</th>
-        <th scope="col">OPTION</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in items %}
-      <tr>
-        <th scope="row">{{item.id}}</th>
-        <td>{{item.name}}</td>
-        <td>{{item.barcode}}</td>
-        <td>{{item.price}}$</td>
-        <td>
-          <button type="button" class="btn btn-info">More Info</button>
-          <button type="button" class="btn btn-success">Purchase this Item</button>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<table class="table table-dark table-striped m">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">NAME</th>
+      <th scope="col">BARCODE</th>
+      <th scope="col">PRICE</th>
+      <th scope="col">OPTION</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    <tr>
+      <th scope="row">{{item.id}}</th>
+      <td>{{item.name}}</td>
+      <td>{{item.barcode}}</td>
+      <td>{{item.price}}$</td>
+      <td>
+        <button type="button" class="btn btn-info">More Info</button>
+        <button type="button" class="btn btn-success">Purchase this Item</button>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 </div>
 {% endblock body %}
