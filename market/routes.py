@@ -32,7 +32,8 @@ def add_item():
             pr_barc = request.form['product_barc']
             pr_desc = request.form['product_desc']
             pr_price = request.form['product_price']
-            item = Item(name=pr_name, price=pr_price, barcode=pr_barc, description=pr_desc)
+            pr_stock = request.form['product_stock']
+            item = Item(name=pr_name, price=pr_price, barcode=pr_barc, description=pr_desc, stock=pr_stock)
             db.session.add(item)
             db.session.commit()
             message = "success"
