@@ -2,7 +2,7 @@ from sqlalchemy.orm import relation
 from market import app
 from flask import render_template,request,redirect
 from flask.helpers import url_for
-from market.models import Item
+from market.models import Item, User
 from sqlalchemy.exc import IntegrityError
 from market import db
 from market.forms import RegisterForm
@@ -14,9 +14,22 @@ from market.forms import RegisterForm
 def home_page():
     return render_template('home.html')
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
+    if form.validate_on_submit():
+        user_to_create = User(username=form.username.data, 
+                            email=form.email.data, 
+                            password_hash=form.password.data,)
+        db.session.add(user_to_create)
+        db.session.commit()
+        return redirect(url_for('market_page'))
+
+    if form.errors != {}: #if there are not errors from the validations
+        for err_msg in form.errors.values():
+            print(f'There was an error with creating a user {err_msg} ')
+
+
     return render_template('register.html', form=form)
 
 @app.route('/market')
@@ -29,7 +42,6 @@ def add_item():
     message =""
     table_show = "true"
     if request.method == 'POST':
-        
         try:
             pr_name = request.form['product_name']
             pr_barc = request.form['product_barc']
