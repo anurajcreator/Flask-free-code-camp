@@ -5,7 +5,7 @@ from market.models import Item, User
 from sqlalchemy.exc import IntegrityError
 from market import db
 from market.forms import RegisterForm, LoginForm    
-from flask_login import login_user
+from flask_login import login_user,logout_user, login_required
 
 @app.route('/')
 
@@ -22,6 +22,8 @@ def register():
                             password=form.password.data,)
         db.session.add(user_to_create)
         db.session.commit()
+        login_user(user_to_create)
+        flash(f'Account Created successfully! Login successfully You are now loggedin as {user_to_create.username}',category='success')
         return redirect(url_for('market_page'))
 
     if form.errors != {}: #if there are not errors from the validations
@@ -42,13 +44,19 @@ def login():
             login_user(attemted_user)
             flash(f'Success! You are logged in as: {attemted_user.username}', category='success')
             return redirect(url_for('market_page'))
-
         else:
             flash('Username and Password are not match! Please try again', category='danger')
     return render_template('login.html', form=form)
 
+@app.route('/logout')
+def logout():
+    logout_user()
+    flash("You have been logged out!", category='info')
+    return redirect(url_for('home_page'))
+
 
 @app.route('/market')
+@login_required
 def market_page():
     items = Item.query.all()
     return render_template('market.html', items = items)
