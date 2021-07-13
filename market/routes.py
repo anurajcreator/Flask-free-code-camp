@@ -5,7 +5,7 @@ from market.models import Item, User
 from sqlalchemy.exc import IntegrityError
 from market import db
 from market.forms import RegisterForm, LoginForm    
-from flask_login import login_user,logout_user, login_required
+from flask_login import login_user,logout_user, login_required, current_user
 
 @app.route('/')
 
@@ -35,6 +35,8 @@ def register():
 
 @app.route('/login', methods=[ 'GET','POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('market_page'))
     form = LoginForm()
     if form.validate_on_submit():
         attemted_user = User.query.filter_by(username = form.user.data).first()
@@ -48,6 +50,7 @@ def login():
             flash('Username and Password are not match! Please try again', category='danger')
     return render_template('login.html', form=form)
 
+
 @app.route('/logout')
 def logout():
     logout_user()
@@ -60,6 +63,14 @@ def logout():
 def market_page():
     items = Item.query.all()
     return render_template('market.html', items = items)
+
+
+@app.route('/become_a_seller')
+@login_required
+def become_a_seller():
+    return render_template('become_a_seller.html')
+
+
 
 @app.route('/add_item' , methods=['GET', 'POST'])
 def add_item():

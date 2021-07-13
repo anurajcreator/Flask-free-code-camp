@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Become a Seller
+{% endblock title %}
+
+{% block body %}
+<div class="container text-center">
+    {% if current_user.is_authenticated %}
+    <h1 class="h3 mb-3 font-weight-normal">
+        Become a Seller by Just one Click
+    </h1>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <a href="#"><button type="button" class="btn btn-success btn-lg">Be a Seller</button></a>
+    </div>
+    {% else %}
+    <h1 class="h3 mb-3 font-weight-normal">Login Your Self First to Become a Seller</h1>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <a href="{{ url_for('login') }}"><button type="button" class="btn btn-secondary btn-sm">Login</button></a>
+    </div>
+    {% endif %}
+</div>
+{% endblock body %}

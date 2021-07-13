@@ -4,32 +4,44 @@ Market Page
 {% endblock title %}
 
 {% block body %}
-<h1>Market Page</h1>
-<div class="container my-3">
-<table class="table table-dark table-striped m">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">NAME</th>
-      <th scope="col">BARCODE</th>
-      <th scope="col">PRICE</th>
-      <th scope="col">OPTION</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for item in items %}
-    <tr>
-      <th scope="row">{{item.id}}</th>
-      <td>{{item.name}}</td>
-      <td>{{item.barcode}}</td>
-      <td>{{item.price}}$</td>
-      <td>
-        <button type="button" class="btn btn-info">More Info</button>
-        <button type="button" class="btn btn-success">Purchase this Item</button>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+
+<div class="row">
+  <div class="col-8">
+    <h2>Available Items on the Market</h2>
+    <p>Click on the one of the items to start buying</p>
+    <br>
+    <table class="table table-dark table-striped m">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">NAME</th>
+          <th scope="col">BARCODE</th>
+          <th scope="col">PRICE</th>
+          <th scope="col">OPTION</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+        
+        {% include 'includes/item_modal.html' %}
+        <tr>
+          <th scope="row">{{item.id}}</th>
+          <td>{{item.name}}</td>
+          <td>{{item.barcode}}</td>
+          <td>{{item.price}}$</td>
+          <td>
+            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ item.id }}">
+              More Info
+            </button>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#purchaseModal-{{ item.id }}">Purchase this Item</button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="col-4">
+    Owned Items
+  </div>
 </div>
 {% endblock body %}
