@@ -1,39 +1,62 @@
 <style>
-    .modal-content{
+    .modal-content {
         background-color: #101221
     }
 </style>
 
-<div class="modal fade" id="exampleModal-{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal-{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{{item.name}}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{item.name}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{item.description}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
         </div>
-        <div class="modal-body">
-         {{item.description}}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
-  <div class="modal fade" id="purchaseModal-{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="purchaseModal-{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{{item.name}}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{item.name}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to buy {{ item.name }} for {{ item.price }}$ ?
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="stocks" class="form-label">How many items?</label>
+                        <input type="text" class="form-control" id="stocks"">
+            </div>
+         </form>
         </div>
-        <div class="modal-body">
-         Are you sure you want to buy {{ item.name }} for {{ item.price }}$ ?
+        <div class=" modal-footer">
+                        <input id="purchased_item" type="hidden" value="{{item.id}}">
+                        <a href="/market" <button type="button" class="btn btn-success"
+                            data-bs-dismiss="modal">Proceed</button>
+                            {% if confirm == True and quantity > 0 %}
+                            <div class="mb-3">
+                                <h2>Per Unit Price = {{item.price}}</h2>
+                                <h2>Quantity = {{ quantity }}</h2>
+                                <h2>Total Price = {{ total_price }}</h2>
+                            </div>
+                            <div class="mb-3">
+                                <a href="/market/{{item.id}}" <button type="button" class="btn btn-success"
+                                    data-bs-dismiss="modal">Proceed</button>
+                            </div>
+                            {% endif %}
+                    </div>
+
+
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-bs-dismiss="modal">Yes</button>
-        </div>
-      </div>
     </div>
-  </div>

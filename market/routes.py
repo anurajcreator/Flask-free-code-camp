@@ -58,11 +58,24 @@ def logout():
     return redirect(url_for('home_page'))
 
 
-@app.route('/market')
+@app.route('/market', methods=['GET','POST'])
 @login_required
 def market_page():
+    quantity = 0
+    total_price = 0
+    confirm=False
+    if request.method == 'POST':
+        quantity = int(request.form['stocks'])
+        item = Item.query.filter_by(id = request.form['purchased_item']).first()
+        if quantity > int(item.stock):
+            flash(f"Only {item.stock} number of items are available!", category="warning")
+        else:
+            confirm = True
+            total_price = quantity * int(item.price)
+
     items = Item.query.all()
-    return render_template('market.html', items = items)
+    return render_template('market.html', items = items, confirm=confirm, quantity = quantity, total_price = total_price)
+
 
 
 @app.route('/become_a_seller')
