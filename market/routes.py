@@ -4,8 +4,8 @@ from flask import render_template,request,redirect, flash, url_for
 from market.models import Item, User
 from sqlalchemy.exc import IntegrityError
 from market import db
-from market.forms import RegisterForm
-
+from market.forms import RegisterForm, LoginForm    
+from flask_login import login_user
 
 @app.route('/')
 
@@ -19,7 +19,7 @@ def register():
     if form.validate_on_submit():
         user_to_create = User(username=form.username.data, 
                             email=form.email.data, 
-                            password_hash=form.password.data,)
+                            password=form.password.data,)
         db.session.add(user_to_create)
         db.session.commit()
         return redirect(url_for('market_page'))
@@ -30,6 +30,23 @@ def register():
 
 
     return render_template('register.html', form=form)
+
+@app.route('/login', methods=[ 'GET','POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        attemted_user = User.query.filter_by(username = form.user.data).first()
+        if attemted_user == None:
+            attemted_user = User.query.filter_by(email = form.user.data).first()
+        if attemted_user and attemted_user.check_password_correction(attempted_password = form.password.data):
+            login_user(attemted_user)
+            flash(f'Success! You are logged in as: {attemted_user.username}', category='success')
+            return redirect(url_for('market_page'))
+
+        else:
+            flash('Username and Password are not match! Please try again', category='danger')
+    return render_template('login.html', form=form)
+
 
 @app.route('/market')
 def market_page():

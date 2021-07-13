@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-Register
+Login Page
 {% endblock title %}
 
 {% block body %}
@@ -10,28 +10,23 @@ Register
         {{ form.hidden_tag() }}
         <img class="mb-4 img-thumbnail" src="https://miro.medium.com/max/438/1*0G5zu7CnXdMT9pGbYUTQLQ.png" width="200px" alt="">
         <h1 class="h3 mb-3 font-weight-normal">
-            Please Create your Account
+            Please Login 
         </h1>
         <br>
 
-        {{ form.username.label() }}
-        {{ form.username(class="form-control mb-3", placeholder="Username") }}
-
-        {{ form.email.label() }}
-        {{ form.email(class="form-control mb-3", placeholder="Email Address") }}
+        {{ form.user.label() }}
+        {{ form.user(class="form-control mb-3", placeholder="Username") }}
 
         {{ form.password.label() }}
         {{ form.password(class="form-control mb-3", placeholder="Password") }}
 
-        {{ form.confirm_password.label() }}
-        {{ form.confirm_password(class="form-control mb-3", placeholder="Confirm Password") }}
-
         <br>
         <div class="checkbox mb-3">
-            <h6>Allready have an account</h6>
-            <a href="{{ url_for('login') }}"><button type="button" class="btn btn-secondary btn-sm">Login</button></a>
+            <h6>Do not have an account</h6>
+            <a href="{{ url_for('register') }}"><button type="button" class="btn btn-secondary btn-sm">Register</button></a>
 
         </div>
+
         <div class="d-grid gap-2 col-6 mx-auto">
             {{ form.submit(class="btn btn-lg btn-success") }}
         </div>
