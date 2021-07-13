@@ -1,7 +1,6 @@
 from sqlalchemy.orm import relation
 from market import app
-from flask import render_template,request,redirect
-from flask.helpers import url_for
+from flask import render_template,request,redirect, flash, url_for
 from market.models import Item, User
 from sqlalchemy.exc import IntegrityError
 from market import db
@@ -27,7 +26,7 @@ def register():
 
     if form.errors != {}: #if there are not errors from the validations
         for err_msg in form.errors.values():
-            print(f'There was an error with creating a user {err_msg} ')
+            flash(f'There was an error with creating a user {err_msg} ', category='danger')
 
 
     return render_template('register.html', form=form)
